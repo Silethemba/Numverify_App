@@ -1,6 +1,7 @@
 package com.example.numverifyapp
 
 import com.example.numverifyapp.Models.Country
+import com.example.numverifyapp.Models.Telephone
 import com.example.numverifyapp.RetrofitClient.retrofitClient
 import retrofit2.Call
 import retrofit2.Response
@@ -15,10 +16,10 @@ class NumVerifyRepository {
         return countryCodeResponse.body()
     }
 
-    fun validateNumber(number: String, countryCode: String): Number? {
-        val validateNumber: Call<Number?> =
+    fun validateNumber(number: String, countryCode: String): Telephone? {
+        val validateNumber: Call<Telephone?> =
             retrofitClient.validateNumber(number, countryCode, "1", accessKey = accessKey)
-        val validateNumberResponse: Response<Number?> = validateNumber.execute()
+        val validateNumberResponse: Response<Telephone?> = validateNumber.execute()
         return validateNumberResponse.body()
     }
 }

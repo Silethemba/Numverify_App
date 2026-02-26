@@ -1,18 +1,21 @@
 package com.example.numverifyapp
 
-import android.R.attr.text
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.material3.Button
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -37,22 +40,24 @@ class MainActivity : ComponentActivity() {
             VerifyNumber()
         }
     }
+
     @Composable
     fun SimpleCountryList(viewModel: NumVerifyViewModel) {
         val countryMap by viewModel.countries.observeAsState()
         // Convert Map -> List
         val countryList = countryMap
-            ?.map { (diallingCode, country,) ->
+            ?.map { (diallingCode, country) ->
                 country.copy(dialling_code = diallingCode)
             }
-            ?.sortedBy { it.country_name}
+            ?.sortedBy { it.country_name }
             ?: emptyList()
 
-       LaunchedEffect(Unit) {
+        LaunchedEffect(Unit) {
             viewModel.searchCountryList()
-       }
+        }
         CountryList(countryList)
     }
+
     @Composable
     fun CountryList(countries: List<Country>) {
         LazyColumn {
@@ -61,6 +66,7 @@ class MainActivity : ComponentActivity() {
             }
         }
     }
+
     @Composable
     fun CountryItem(country: Country) {
         Column(
@@ -79,23 +85,72 @@ class MainActivity : ComponentActivity() {
             )
         }
     }
+
     @Composable
-    fun VerifyNumber(){
+    fun VerifyNumber() {
+        val telephone by viewModel.validateNumber.observeAsState()
         var phone by remember { mutableStateOf("") }
-        Column(modifier = Modifier
-            .fillMaxWidth()
-            .padding(top = 100.dp)
-            ){
-            TextField(
-                value = phone, // The current value to display
-                onValueChange = { text ->
-                    phone = text
-                },
-                label = Text("Enter Phone Number") // The label displayed above the text field
+        var diallingCode by remember { mutableStateOf("") }
+
+        Column() {
+            Row(
+                modifier = Modifier
+                    .padding(top = 100.dp)
+                    .padding(16.dp)
+            )
+            {
+                OutlinedTextField(
+                    value = phone,
+                    onValueChange = { phone = it },
+                    label = { Text("Enter Number") },
+                    modifier = Modifier
+                        .weight(1f)
+                )
+                Spacer(modifier = Modifier.width(16.dp))
+
+                OutlinedTextField(
+                    value = diallingCode,
+                    onValueChange = { diallingCode = it },
+                    label = { Text("Country Code") },
+                    modifier = Modifier
+                        .weight(1f)
+                )
+                Spacer(modifier = Modifier.width(16.dp))
+                Button(onClick = {
+                    viewModel.validateNumber(phone, diallingCode)
+
+                }) {
+                    Text(text = "Verify")
+                }
+            }
+            Text(
+                "Phone Number valid :${telephone?.valid}",
+                modifier = Modifier
+                    .padding(16.dp)
+            )
+            Text(
+                "Carrier :${telephone?.carrier}",
+                modifier = Modifier
+                    .padding(16.dp)
+            )
+            Text(
+                "Country Code :${telephone?.country_code}",
+                modifier = Modifier
+                    .padding(16.dp)
+            )
+            Text(
+                "Country Name :${telephone?.country_name}",
+                modifier = Modifier
+                    .padding(16.dp)
             )
         }
     }
 }
+
+
+
+
+
 
 
 
