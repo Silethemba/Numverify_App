@@ -13,5 +13,5 @@ interface NumverifyApi {
     fun validateNumber(@Query("number") number: String,
                        @Query("country_code") countryCode: String,
                        @Query("format") format: String,
-                       @Query("appid")appid: String?): Call<Number?>
+                       @Query("access_key")accessKey: String?): Call<Number?>
 }

@@ -12,10 +12,22 @@ class NumVerifyViewModel(private val repository: NumVerifyRepository): ViewModel
     private val _countries = MutableLiveData<Map<String, Country>?>()
     var countries: LiveData<Map<String, Country>?> = _countries
 
-    fun search() {
+    private val _number = MutableLiveData<Number?>()
+    var number: LiveData<Number?> = _number
+
+
+    fun searchCountryList() {
         viewModelScope.launch(Dispatchers.IO) {
             val response = repository.getCountryCodeList()
             _countries.postValue(response)
         }
     }
+
+    fun validateNumber(number: String, countryCode: String) {
+        viewModelScope.launch(Dispatchers.IO) {
+            val response = repository.validateNumber(number, countryCode)
+            _number.postValue(response)
+    }
 }
+}
+
