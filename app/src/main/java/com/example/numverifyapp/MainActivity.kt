@@ -4,6 +4,8 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -25,6 +27,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.example.numverifyapp.Models.Country
 
@@ -60,7 +63,7 @@ class MainActivity : ComponentActivity() {
 
     @Composable
     fun CountryList(countries: List<Country>) {
-        LazyColumn {
+        LazyColumn(modifier = Modifier.padding(top = 30.dp)) {
             items(countries) { country ->
                 CountryItem(country)
             }
@@ -72,7 +75,7 @@ class MainActivity : ComponentActivity() {
         Column(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(16.dp)
+                .padding(8.dp)
         ) {
             Text(
                 text = country.country_name,
@@ -126,23 +129,31 @@ class MainActivity : ComponentActivity() {
             Text(
                 "Phone Number valid :${telephone?.valid}",
                 modifier = Modifier
-                    .padding(16.dp)
-            )
-            Text(
-                "Carrier :${telephone?.carrier}",
-                modifier = Modifier
-                    .padding(16.dp)
+                    .padding(8.dp)
             )
             Text(
                 "Country Code :${telephone?.country_code}",
                 modifier = Modifier
-                    .padding(16.dp)
+                    .padding(8.dp)
             )
             Text(
                 "Country Name :${telephone?.country_name}",
                 modifier = Modifier
-                    .padding(16.dp)
+                    .padding(8.dp)
             )
+            Text(
+                "Scrollable List to find country code",
+                fontWeight = FontWeight.Bold,
+                modifier = Modifier
+                    .padding(top = 16.dp, start = 8.dp)
+            )
+            Box(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(start = 8.dp)
+            ) {
+                SimpleCountryList(viewModel)
+            }
         }
     }
 }
