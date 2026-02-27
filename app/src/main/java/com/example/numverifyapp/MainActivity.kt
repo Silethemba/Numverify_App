@@ -1,5 +1,6 @@
 package com.example.numverifyapp
 
+import android.app.Application
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -29,7 +30,10 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.example.numverifyapp.Models.Country
+import dagger.hilt.android.HiltAndroidApp
 
+@HiltAndroidApp
+class MyApplication : Application()
 class MainActivity : ComponentActivity() {
     private val repository = NumVerifyRepository()
     val viewModel = NumVerifyViewModel(repository)

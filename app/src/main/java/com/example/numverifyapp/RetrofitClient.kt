@@ -1,15 +1,19 @@
 package com.example.numverifyapp
 import com.google.gson.GsonBuilder
 import com.google.gson.Strictness
+import dagger.Module
+import dagger.hilt.InstallIn
+import dagger.hilt.components.SingletonComponent
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.create
 
+@Module
+@InstallIn(SingletonComponent::class)
 object RetrofitClient{
 
-        const val access_key: String = "6bf82b0f9330896fb1e9393f61e0bc6c"
         const val BASE_URL = "https://apilayer.net/api/"
         private val logging = HttpLoggingInterceptor()
             .setLevel(HttpLoggingInterceptor.Level.BODY) // Set the desired log level
