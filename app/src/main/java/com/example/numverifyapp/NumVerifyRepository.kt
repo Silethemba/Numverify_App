@@ -6,6 +6,7 @@ import retrofit2.Call
 import retrofit2.Response
 import java.io.IOException
 
+//Apikey to be transferred to the gradle file for security reasons
 const val accessKey = "b089608159a93022fff45fbd58960dee"
 
 class NumVerifyRepository {

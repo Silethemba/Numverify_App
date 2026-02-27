@@ -32,9 +32,9 @@ import androidx.compose.ui.unit.dp
 import com.example.numverifyapp.Models.Country
 import dagger.hilt.android.HiltAndroidApp
 
-@HiltAndroidApp
 class MyApplication : Application()
 class MainActivity : ComponentActivity() {
+    //work in progress to use Hilt for dependencies
     private val repository = NumVerifyRepository()
     val viewModel = NumVerifyViewModel(repository)
 
@@ -57,6 +57,7 @@ class MainActivity : ComponentActivity() {
             }
             ?.sortedBy { it.country_name }
             ?: emptyList()
+
 
         LaunchedEffect(Unit) {
             viewModel.searchCountryList()

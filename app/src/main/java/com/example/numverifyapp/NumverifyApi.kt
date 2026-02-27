@@ -7,10 +7,10 @@ import retrofit2.http.GET
 import retrofit2.http.Query
 
 interface NumverifyApi {
-    @GET("/countries")
+    @GET("countries")
     fun getCountryList(@Query("access_key")accessKey: String?): Call<Map<String, Country>?>
 
-    @GET("/validate")
+    @GET("validate")
     fun validateNumber(@Query("number") telNumber: String,
                        @Query("country_code") countryCode: String,
                        @Query("format") format: String?,
